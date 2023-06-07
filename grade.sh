@@ -8,16 +8,18 @@ mkdir grading-area
 git clone $1 student-submission
 echo 'Finished cloning'
 
-if [[ -f student-submission/ListExamples.java ]]
+list_examples=$(find student-submission -name "ListExamples.java")
+
+if [[ -z $list_examples ]]
 then
-  echo 'ListExamples.java found'
-else
   echo 'ListExamples.java not found'
-  echo 'Score: 0/4'
-  exit 1
+  echo 'Score 0/4'
+  exit 2
+else
+  echo 'ListExamples.java found'
 fi
 
-cp student-submission/ListExamples.java ./grading-area
+cp "$list_examples" ./grading-area
 
 cp TestListExamples.java grading-area/
 cp -r lib grading-area/
